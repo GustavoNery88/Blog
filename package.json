@@ -1,7 +1,7 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "<h2><a href =\"https://blog-nms4.onrender.com\">Link do projeto</a></h2>",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

@@ -47,7 +47,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 // Public Functions
-app.use(express.static(__dirname + '../../' + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 // Diretorio das Imagens
 const imagemPath = path.join(__dirname, '/uploads');
