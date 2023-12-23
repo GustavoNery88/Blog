@@ -49,8 +49,6 @@ app.set('view engine', 'handlebars');
 // Public Functions
 app.use(express.static(__dirname + '/public'));
 
-app.use(express.static(path.join(__dirname, '/uploads')));
-
 
 // Diretorio das Imagens
 const imagemPath = path.join(__dirname, '/uploads');
