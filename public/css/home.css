@@ -13,4 +13,30 @@
     }
   }
 
-  
+  .nav-item a, .navbar-brand{
+    color: white;
+  }
+
+ .navbar-brand:hover{
+    color: rgb(222, 220, 220);
+  }
+
+  .nav-item a:hover{
+    color: rgb(222, 220, 220);
+  }
+
+  .navbar-toggler-icon{
+    color: white;
+  }
+
+  .navbar-toggler{
+    border: 1px solid white;
+    border: none;
+    box-shadow: none;
+  }
+
+  .cabecalho-botao-icone{
+    color: white;
+    font-size: 2rem;
+    box-shadow: none;
+  }

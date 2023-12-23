@@ -1,34 +1,43 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2">
-  <a class="navbar-brand" href="/">Blog em NodeJS</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse d-flex justify-content-end gap-4" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-    </ul>
 
-{{#if user}}
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Blog em NodeJS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="cabecalho-botao-icone bi bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 dic">
+        <li class="nav-item">
+          <a class="nav-link" href="/">HOME</a>
+        </li>
 
-<span class="navbar-text">
-      <a class="nav-link" href="/admin/postagens">POSTAGENS</a>
-</span>
-<span class="navbar-text">
-      <a class="nav-link" href="/admin/categorias">CATEGORIAS</a>
-</span>
+        {{#if user}}
 
-<span class="navbar-text">
-      <a class="nav-link" href="/admin/logout">SAIR</a>
-</span>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/postagens">POSTAGENS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/categorias">CATEGORIAS</a>
+        </li>
 
-{{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/usuarios">USÚARIOS</a>
+        </li>
 
-    <span class="navbar-text">
-      <a class="nav-link" href="/admin/login">LOGIN</a>
-    </span>
 
-{{/if}}    
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/logout">SAIR</a>
+        </li>
+
+        {{else}}
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/login">LOGIN</a>
+        </li>
+
+        {{/if}}
+      </ul>
+    </div>
   </div>
 </nav>
