@@ -74,7 +74,7 @@ mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
     console.log('Mongo conectado')
 }).catch((err)=> {
-    console.log('Erro ao conectar ao Mongo online')
+    console.log('Erro ao conectar ao Mongo online', err)
 });
 
 // Porta de acesso
