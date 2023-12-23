@@ -78,7 +78,7 @@ mongoose.connect(process.env.MONGO_URL)
 });
 
 // Porta de acesso
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3333
 
 // Home page
 app.get('/', (req, res) => {
