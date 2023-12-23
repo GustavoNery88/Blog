@@ -78,7 +78,7 @@ mongoose.connect(process.env.MONGO_URL)
 });
 
 // Porta de acesso
-
+const PORT = process.env.PORT
 
 // Home page
 app.get('/', (req, res) => {
@@ -102,6 +102,6 @@ app.get("/404", (req,res) => {
     res.send('Erro 404')
 })
 
-app.listen(5000, () => {
-    console.log('Escutando na porta: 5000')
+app.listen(PORT, () => {
+    console.log('Escutando na porta:' + PORT)
 })
