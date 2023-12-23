@@ -41,19 +41,32 @@ router.get('/postagem/add', eAdmin, (req,res) =>{
     })
 })
 
-router.post('/postagem/nova', upload.single('img'), eAdmin, (req,res) =>{
-    const novaPostagem = new postagens({
-        titulo: req.body.titulo,
-        slug: req.body.titulo.toLowerCase().split(" ").join("-"),
-        descricao: req.body.descricao,
-        conteudo: req.body.conteudo,
-        categoria: req.body.categoria,
-        imagem: req.file.filename.toLowerCase().split(" ").join("-")
-    })
-    novaPostagem.save();
-    req.flash("success_msg", "Postagem realizada com sucesso")
-   res.redirect('/admin/postagens')
-})
+router.post('/postagem/nova', upload.single('img'), eAdmin, (req, res) => {
+    try {
+        // Verifica se há um arquivo enviado
+        if (!req.file) {
+            throw new Error('Nenhum arquivo foi enviado.');
+        }
+
+        const novaPostagem = new postagens({
+            titulo: req.body.titulo,
+            slug: req.body.titulo.toLowerCase().split(" ").join("-"),
+            descricao: req.body.descricao,
+            conteudo: req.body.conteudo,
+            categoria: req.body.categoria,
+            imagem: req.file.filename.toLowerCase().split(" ").join("-")
+        });
+
+        novaPostagem.save();
+        req.flash("success_msg", "Postagem realizada com sucesso");
+        res.redirect('/admin/postagens');
+    } catch (error) {
+        console.error('Erro ao processar a nova postagem:', error.message);
+        req.flash("error_msg", "Erro ao processar a nova postagem");
+        res.redirect('/admin/postagem/add');
+    }
+});
+
 
 router.get('/postagem/edit/:id', eAdmin, (req,res) =>{
     postagens.findOne({_id:req.params.id}).lean().then((postagens) =>{
