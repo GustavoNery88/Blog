@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-end">
+
+  <a href="/admin/categorias/add">
+    <button class="btn btn-success">Nova categoria</button>
+  </a>
+
+</div>
+<h2>Lista de categorias:</h2>
+<hr>
+{{#each categorias}}
+<div class="card mt-4">
+  <div class="card-body">
+    <h5 class="card-title">{{nome}}</h5>
+    <p class="card-text">{{slug}}</p>
+    <small>{{date}}</small><br>
+
+    <div class="mt-2 d-flex gap-2">
+      <div class="btn-group mt-">
+        <a href="/admin/categorias/edit/{{_id}}">
+          <button class="btn btn-success btn-sm ">Editar categoria</button>
+        </a>
+      </div>
+      <div class="btn-group">
+        <form action="/admin/categoria/apagar" method="post">
+          <input type="hidden" name="id" value="{{_id}}">
+          <button class="btn btn-danger btn-sm">Apagar categoria</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{else}}
+<h4>Nenhuma categoria registrada!</h4>
+{{/each}}
+

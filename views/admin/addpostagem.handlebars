@@ -1,0 +1,63 @@
+<div id="liveAlertPlaceholder"></div>
+<h3>Nova Postagem: </h3>
+<div class="card">
+  <div class="card-body">
+    <form id="novaPostagemForm" action="/admin/postagem/nova" enctype="multipart/form-data" method="post">
+      <div class="mb-3">
+        <label for="titulo">Título</label>
+        <input type="text" class="form-control" name="titulo" placeholder="Titulo">
+      </div>
+      <div class="mb-3">
+        <label for="slug">Descrição</label>
+        <input type="text" class="form-control" name="descricao" placeholder="Descrição">
+      </div>
+      <div class="mb-3">
+        <label for="slug">Categoria</label>
+        <select class="custom-select" name="categoria" id="categoriaSelect">
+          <option value="" selected>Todas as Categorias</option>
+          {{#each categorias}}
+          <option value="{{_id}}">{{nome}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="slug">Conteúdo</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="conteudo" rows="3"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="slug">Imagem</label>
+        <input type="file" class="form-control-file" name="img">
+      </div>
+      <button type="submit" id="liveAlertBtn" class="btn btn-success mt-4">Criar postagem</button>
+    </form>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('novaPostagemForm');
+    const categoriaSelect = document.getElementById('categoriaSelect');
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
+    form.addEventListener('submit', function (event) {
+      const categoriaSelecionada = categoriaSelect.value;
+
+      if (categoriaSelecionada === "") {
+        const appendAlert = (message, type) => {
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = [
+            `<div class="alert alert-danger alert-dismissible fade show" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+          ].join('');
+
+          alertPlaceholder.innerHTML = ''; 
+          alertPlaceholder.append(wrapper);
+        };
+
+        appendAlert("Por favor, selecione uma categoria válida!");
+        event.preventDefault();
+      }
+    });
+  });
+</script>

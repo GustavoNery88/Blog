@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-end">
+  <a href="/admin/postagem/add">
+    <button class="btn btn-success">Nova postagem</button>
+  </a>
+</div>
+
+<h2>Lista de postagens:</h2>
+<hr>
+{{#each postagens}}
+<div class="card mt-2">
+  <div class="card-body">
+    <h4>{{titulo}}</h4>
+    <div class="col-auto d-none d-lg-block">
+      <img src="/uploads/{{imagem}}" width="200" alt="">
+    </div>
+    <p>{{descricao}}</p>
+    <small>{{categoria.nome}}</small><br>
+    <small>{{date}}</small><br>
+    <a href="/admin/postagem/edit/{{_id}}">
+      <button class="btn btn-success mt-4">Editar</button>
+    </a>
+    <a href="/admin/postagem/apagar/{{_id}}">
+      <button class="btn btn-danger mt-4">Apagar</button>
+    </a>
+  </div>
+</div>
+{{else}}
+<h4>Nenhuma postagem registrada!</h4>
+{{/each}}
