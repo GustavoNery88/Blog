@@ -23,9 +23,18 @@ const storage = multer.diskStorage({
         const allowedMimes = [
             'image/jpeg',
             'image/png',
-            'image/gif'
+            'image/gif',
+            'image/jpg'
         ];
+
+        if (allowedMimes.includes(file.mimetype)) {
+            cb(null, true); // Aceita o arquivo
+        } else {
+            cb(new Error('Tipo de arquivo não suportado.'), false); // Rejeita o arquivo
+        }
     } 
+
+    
 });
 const upload = multer({storage: storage});
 
