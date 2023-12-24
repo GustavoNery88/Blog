@@ -50,8 +50,9 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Diretorio das Imagens
-const imagemPath = path.join(__dirname, '/img');
+const imagemPath = path.join(__dirname, '/public/img');
 app.use("/img", express.static(imagemPath));
+
 
 // Rotas
 app.use('/admin', postagem)

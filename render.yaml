@@ -1,0 +1,7 @@
+services:
+  - name: web
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      NODE_ENV: production
+    staticPublishPath: public
