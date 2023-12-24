@@ -14,7 +14,7 @@ const { postagens } = require("../models/Postagem")
 // Configuração de armazenamento
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/')
+        cb(null, 'public/img/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now()+'-'+file.originalname)
@@ -87,7 +87,7 @@ router.get('/postagem/apagar/:id', eAdmin, (req, res) => {
     }).then((postagem) => {
         // Remover a imagem associada ao post excluído
         if (postagem && postagem.imagem) {
-            const imagePath = path.join(__dirname, '../uploads', postagem.imagem);
+            const imagePath = path.join(__dirname, '/img', postagem.imagem);
             fs.unlink(imagePath, (err) => {
                 if (err) {
                     console.error('Erro ao excluir a imagem:', err);
