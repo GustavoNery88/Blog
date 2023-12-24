@@ -92,6 +92,7 @@ app.get('/', (req, res) => {
 
 app.get('/:id', (req, res) => {
     postagens.findOne({slug:req.params.id}).lean().then((postagens) =>{
+        console.log("Caminho da view:", 'usuario/ler');
         res.render('usuario/ler', { postagens: postagens })
     }).catch((err) => {
         res.redirect("/404")
