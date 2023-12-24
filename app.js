@@ -25,12 +25,12 @@ const usuario = require('./routes/usuario');
 const categoria = require('./routes/categoria');
 
 // Encoded
-app.use(express.urlencoded({extended: true})); 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Sessao
 app.use(session({
-    secret:"blog-em-node-js",
+    secret: "blog-em-node-js",
     resave: true,
     saveUninitialized: true,
     store: new MemoryStore({
@@ -47,12 +47,11 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 // Public Functions
-app.use(express.static(__dirname + '/public'));
-
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Diretorio das Imagens
 const imagemPath = path.join(__dirname, '/uploads');
-app.use("/uploads",express.static(imagemPath));
+app.use("/uploads", express.static(imagemPath));
 
 // Rotas
 app.use('/admin', postagem)
@@ -60,10 +59,10 @@ app.use('/admin', usuario)
 app.use('/admin', categoria)
 
 // Middleware
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
-    res.locals.error =req.flash("error")
+    res.locals.error = req.flash("error")
     res.locals.user = req.user || null;
     res.locals.moment = moment;
     next();
@@ -72,34 +71,34 @@ app.use((req,res,next) => {
 // Conecation MongoDB
 const Schema = mongoose.Schema;
 mongoose.connect(process.env.MONGO_URL)
-.then(()=>{
-    console.log('Mongo conectado')
-}).catch((err)=> {
-    console.log('Erro ao conectar ao Mongo online', err)
-});
+    .then(() => {
+        console.log('Mongo conectado')
+    }).catch((err) => {
+        console.log('Erro ao conectar ao Mongo online', err)
+    });
 
 // Porta de acesso
 const PORT = process.env.PORT
 
 // Home page
 app.get('/', (req, res) => {
-    postagens.find().populate("categoria").sort({date:"desc"})
-    .lean().then((postagens) =>{
-        res.render('usuario/home', { postagens: postagens })
-    }).catch((err) => {
-        res.redirect("/404")
-    })
+    postagens.find().populate("categoria").sort({ date: "desc" })
+        .lean().then((postagens) => {
+            res.render('usuario/home', { postagens: postagens })
+        }).catch((err) => {
+            res.redirect("/404")
+        })
 });
 
 app.get('/:id', (req, res) => {
-    postagens.findOne({slug:req.params.id}).lean().then((postagens) =>{
+    postagens.findOne({ slug: req.params.id }).lean().then((postagens) => {
         res.render('usuario/ler', { postagens: postagens })
     }).catch((err) => {
         res.redirect("/404")
     })
 });
 
-app.get("/404", (req,res) => {
+app.get("/404", (req, res) => {
     res.send('Erro 404')
 })
 
