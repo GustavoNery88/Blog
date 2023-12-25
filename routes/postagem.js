@@ -72,7 +72,7 @@ router.get('/postagem/edit/:id', eAdmin, (req,res) =>{
 
 router.post('/postagem/edit', eAdmin, (req,res) =>{
     let filter = { _id: req.body.id }
-    let update = { titulo: req.body.titulo, descricao: req.body.descricao }
+    let update = { titulo: req.body.titulo, descricao: req.body.descricao, conteudo: req.body.conteudo }
     postagens.findOneAndUpdate(filter, update).then(() => {
         req.flash("success_msg", "Postagem atualizada")
         res.redirect('/admin/postagens')
