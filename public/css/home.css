@@ -44,3 +44,9 @@
 .altura{
   height: 100vh;
 }
+
+@media(max-width:779px){
+  .footer{
+    padding-top: 200px;
+  }
+}
