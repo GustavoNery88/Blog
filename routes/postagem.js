@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now()+'-'+file.originalname)
+        cb(null, Date.now() + '-' + file.originalname)
     },
     fileFilter: (req, file, cb) => {
         const allowedMimes = [
@@ -32,25 +32,25 @@ const storage = multer.diskStorage({
         } else {
             cb(new Error('Tipo de arquivo não suportado.'), false); // Rejeita o arquivo
         }
-    } 
+    }
 
-    
+
 });
-const upload = multer({storage: storage});
+const upload = multer({ storage: storage });
 
-router.get('/postagens', eAdmin, (req,res) =>{
-    postagens.find().populate("categoria").sort({date:"desc"}).lean().then((postagens) =>{
+router.get('/postagens', eAdmin, (req, res) => {
+    postagens.find().populate("categoria").sort({ date: "desc" }).lean().then((postagens) => {
         res.render('admin/postagens', { postagens: postagens })
     })
 })
 
-router.get('/postagem/add', eAdmin, (req,res) =>{
-    categorias.find().lean().then((categorias) =>{
-        res.render('admin/addpostagem', {categorias: categorias})
+router.get('/postagem/add', eAdmin, (req, res) => {
+    categorias.find().lean().then((categorias) => {
+        res.render('admin/addpostagem', { categorias: categorias })
     })
 })
 
-router.post('/postagem/nova', upload.single('img'), eAdmin, (req,res) =>{
+router.post('/postagem/nova', upload.single('img'), eAdmin, (req, res) => {
     const novaPostagem = new postagens({
         titulo: req.body.titulo,
         slug: req.body.titulo.toLowerCase().split(" ").join("-"),
@@ -61,48 +61,43 @@ router.post('/postagem/nova', upload.single('img'), eAdmin, (req,res) =>{
     })
     novaPostagem.save();
     req.flash("success_msg", "Postagem realizada com sucesso")
-   res.redirect('/admin/postagens')
+    res.redirect('/admin/postagens')
 })
 
-router.get('/postagem/edit/:id', eAdmin, (req,res) =>{
-    postagens.findOne({_id:req.params.id}).lean().then((postagens) =>{
-        res.render('admin/editpostagem', {postagens: postagens})
+router.get('/postagem/edit/:id', eAdmin, (req, res) => {
+    postagens.findOne({ _id: req.params.id }).lean().then((postagens) => {
+        res.render('admin/editpostagem', { postagens: postagens })
     })
 })
 
-router.post('/postagem/edit', eAdmin, (req,res) =>{
-    let filter = { _id: req.body.id }
-    let update = { titulo: req.body.titulo, descricao: req.body.descricao, conteudo: req.body.conteudo }
-    postagens.findOneAndUpdate(filter, update).then(() => {
-        req.flash("success_msg", "Postagem atualizada")
-        res.redirect('/admin/postagens')
-    }).catch(err => {
-        req.flash("error_msg", "Erro ao atualizar categoria")
-    })
-})
+router.post('/postagem/edit', eAdmin, async (req, res) => {
+    try {
+        let filter = { _id: req.body.id };
+        let update = { titulo: req.body.titulo, descricao: req.body.descricao, conteudo: req.body.conteudo};
+        await postagens.findOneAndUpdate(filter, update);
+        req.flash("success_msg", "Postagem atualizado");
+        res.redirect('/admin/postagens');
+    } catch (err) {
+        req.flash("error_msg", "Erro ao atualizar postagem");
+        res.redirect('/admin/postagem/edit/' + req.body.id);
+    }
+});
 
-router.get('/postagem/apagar/:id', eAdmin, (req, res) => {
-    postagens.findOneAndDelete({
-        _id: req.params.id
-    }).then((postagem) => {
-        // Remover a imagem associada ao post excluído
-        if (postagem && postagem.imagem) {
-            const imagePath = path.join(__dirname, '../uploads', postagem.imagem);
-            fs.unlink(imagePath, (err) => {
-                if (err) {
-                    console.error('Erro ao excluir a imagem:', err);
-                } else {
-                    console.log('Imagem excluída com sucesso!');
-                }
-            });
+router.post('/postagem/apagar/:id', eAdmin, async (req, res) => {
+    try {
+        const deletedUser = await postagens.findOneAndDelete({ _id: req.params.id });
+        if (!deletedUser) {
+            req.flash('error_msg', 'Postagem não encontrado!');
+        } else {
+            req.flash('success_msg', 'Postagem apagado com sucesso!');
         }
-
-        req.flash("success_msg", "Postagem apagada com sucesso");
         res.redirect('/admin/postagens');
-    }).catch(() => {
-        req.flash("error_msg", "Erro ao apagar postagem");
+    } catch (error) {
+        // Erro ao apagar o usuário
+        console.error(error);
+        req.flash('error', 'Erro ao apagar o postegem!');
         res.redirect('/admin/postagens');
-    });
+    }
 });
 
 module.exports = router;

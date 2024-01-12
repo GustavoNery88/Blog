@@ -1,22 +1,18 @@
 <h3>Editar usúario: </h3>
 <div class="card">
   <div class="card-body">
-    <form action="/admin/usuarios/edit" method="post">
-        <div class="mb-3">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control" name="nome" value="{{usuarios.nome}}" placeholder="Nome do usúario">
-        </div>
-        <div class="mb-3">
-            <label for="slug">Email</label>
-            <input type="email" class="form-control" name="email" value="{{usuarios.email}}" placeholder="Email du usúario">
-        </div>
-        <div class="mb-3">
-            <label for="slug">Senha</label>
-            <input type="password" class="form-control" name="senha"  placeholder="Senha do usúario">
-        </div>
-        <br />
-        <input type="hidden" name="id" value="{{usuarios._id}}">
-        <button type="submit" class="btn btn-success">Editar usúario</button>
+    <form action="/admin/usuario/edit" method="post">
+      <div class="mb-3">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" name="nome" value="{{usuarios.nome}}" placeholder="Nome do usúario">
+      </div>
+      <div class="mb-3">
+        <label for="slug">Email</label>
+        <input type="email" class="form-control" name="email" value="{{usuarios.email}}" placeholder="Email du usúario">
+      </div>
+      <br />
+      <input type="hidden" name="id" value="{{usuarios._id}}">
+      <button type="submit" class="btn btn-success">Editar usúario</button>
     </form>
   </div>
 </div>

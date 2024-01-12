@@ -33,25 +33,35 @@ router.get('/categorias/edit/:id', eAdmin, (req,res) =>{
     })     
 })
 
-router.post('/categorias/edit', eAdmin, (req,res) =>{
-    let filter = { _id: req.body.id }
-    let update = { nome: req.body.nome, slug: req.body.slug }
-    categorias.findOneAndUpdate(filter, update).then(() => {
-        console.log("success_msg", "Categoria atualizada")
-        res.redirect('/admin/categorias')
-    }).catch(err => {
-        req.flash("error_msg", "Erro ao atualizar categoria")
-    })
-})
+router.post('/categoria/edit', eAdmin, async (req, res) => {
+    try {
+        let filter = { _id: req.body.id };
+        let update = { nome: req.body.nome, slug: req.body.slug};
+        await categorias.findOneAndUpdate(filter, update);
+        req.flash("success_msg", "Categoria atualizado");
+        res.redirect('/admin/categorias');
+    } catch (err) {
+        req.flash("error_msg", "Erro ao atualizar postagem");
+        res.redirect('/admin/categoria/edit/' + req.body.id);
+    }
+});
 
-router.post('/categoria/apagar', eAdmin, (req, res) => {
-    categorias.deleteOne({
-        _id: req.body.id
-    }).then(() => {
-        req.flash("success_msg", "Categoria deletada com sucesso!")
-        res.redirect('/admin/categorias')
-    })
-})
+router.post('/categoria/apagar/:id', eAdmin, async (req, res) => {
+    try {
+        const deletedUser = await categorias.findOneAndDelete({ _id: req.params.id });
+        if (!deletedUser) {
+            req.flash('error_msg', 'Categoria não encontrado!');
+        } else {
+            req.flash('success_msg', 'Categoria apagado com sucesso!');
+        }
+        res.redirect('/admin/categorias');
+    } catch (error) {
+        // Erro ao apagar o usuário
+        console.error(error);
+        req.flash('error', 'Erro ao apagar o categoria!');
+        res.redirect('/admin/categorias');
+    }
+});
 
 
 module.exports = router;

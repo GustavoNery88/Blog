@@ -13,17 +13,15 @@
     <h5 class="card-title">{{nome}}</h5>
     <p class="card-text">{{slug}}</p>
     <small>{{date}}</small><br>
-
     <div class="mt-2 d-flex gap-2">
       <div class="btn-group mt-">
         <a href="/admin/categorias/edit/{{_id}}">
-          <button class="btn btn-success btn-sm ">Editar categoria</button>
+          <button class="btn btn-success btn-sm">Editar</button>
         </a>
       </div>
       <div class="btn-group">
-        <form action="/admin/categoria/apagar" method="post">
-          <input type="hidden" name="id" value="{{_id}}">
-          <button class="btn btn-danger btn-sm">Apagar categoria</button>
+        <form action="/admin/categoria/apagar/{{_id}}" method="post">
+          <button type="submit" class="btn btn-danger btn-sm">Apagar</button>
         </form>
       </div>
     </div>
@@ -33,4 +31,3 @@
 {{else}}
 <h4>Nenhuma categoria registrada!</h4>
 {{/each}}
-

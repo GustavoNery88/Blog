@@ -14,16 +14,15 @@
     <p class="card-text">{{email}}</p>
     <small>{{senha}}</small><br>
 
-    <div class=" mt-2 d-flex gap-2">
+    <div class="mt-2 d-flex gap-2">
       <div class="btn-group mt-">
         <a href="/admin/usuario/edit/{{_id}}">
           <button class="btn btn-success btn-sm ">Editar usúario</button>
         </a>
       </div>
       <div class="btn-group">
-        <form action="/admin/usuario/apagar" method="post">
-          <input type="hidden" name="id" value="{{_id}}">
-          <button class="btn btn-danger btn-sm">Apagar usúario</button>
+        <form action="/admin/usuario/apagar/{{_id}}" method="post">
+          <button type="submit" class="btn btn-danger btn-sm">Apagar usuário</button>
         </form>
       </div>
     </div>
@@ -33,4 +32,3 @@
 {{else}}
 <h4>Nenhum usuario registrado!</h4>
 {{/each}}
-
