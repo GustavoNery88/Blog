@@ -98,3 +98,10 @@ body {
     opacity: 1;
   }
 }
+
+@media (max-width:500px) {
+	.alert {
+		font-size: 15px;
+		width: 70%;
+	}
+}
