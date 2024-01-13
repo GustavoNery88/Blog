@@ -42,6 +42,11 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
+
 // Template Engine
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -58,15 +63,6 @@ app.use('/admin', postagem)
 app.use('/admin', usuario)
 app.use('/admin', categoria)
 
-// Middleware
-app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash("error")
-    res.locals.user = req.user || null;
-    res.locals.moment = moment;
-    next();
-});
 
 // Conecation MongoDB
 const Schema = mongoose.Schema;
