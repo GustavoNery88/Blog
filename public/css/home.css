@@ -7,6 +7,14 @@
   user-select: none;
 }
 
+body {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
@@ -41,10 +49,6 @@
   box-shadow: none;
 }
 
-.altura {
-  height: 100vh;
-}
-
 .alert {
   display: flex;
   justify-content: space-between;
@@ -61,6 +65,26 @@
   /* Animação de drop */
 }
 
+.wrapper {
+  flex: 1;
+}
+
+.content {
+  /* Adicione margem inferior igual à altura do rodapé para evitar que o conteúdo fique atrás do rodapé */
+  margin-bottom: 50px;
+  /* Ajuste conforme necessário */
+}
+
+.footer {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  margin-top: auto;
+  /* Mantém o rodapé no final, mesmo quando o conteúdo é pequeno */
+}
+
 @keyframes drop-alert {
   from {
     top: -50px;
@@ -72,11 +96,5 @@
     top: 0;
     /* Finalmente na parte superior da tela */
     opacity: 1;
-  }
-}
-
-@media(max-width:779px) {
-  .footer {
-    padding-top: 200px;
   }
 }

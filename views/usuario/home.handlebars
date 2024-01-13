@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-</head>
-
-<body>
-
-  <div class="row mb-4 altura">
+<div class="row mb-4">
     {{#each postagens}}
     <div class="col-md-6">
-      <div class=" row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative m-1">
+      <div
+        class=" row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative m-1">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-primary"></strong>
           <h3 class="mb-0">{{titulo}}</h3>
@@ -29,11 +22,3 @@
     {{/each}}
   </div>
   </div>
-
-<div class="footer">
-   {{>_footer}}
-</div>
- 
-</body>
-
-</html>
