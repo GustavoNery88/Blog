@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router();
-const mongoose = require('mongoose')
 const multer = require('multer')
 const fs = require('fs');
 const path = require('path');
@@ -60,7 +59,7 @@ router.post('/postagem/nova', upload.single('img'), eAdmin, (req, res) => {
         imagem: req.file.filename.toLowerCase().split(" ").join("-")
     })
     novaPostagem.save();
-    req.flash("success_msg", "Postagem realizada com sucesso")
+    req.flash('success', 'Postagem adicionada com sucesso!');
     res.redirect('/admin/postagens')
 })
 
@@ -73,31 +72,49 @@ router.get('/postagem/edit/:id', eAdmin, (req, res) => {
 router.post('/postagem/edit', eAdmin, async (req, res) => {
     try {
         let filter = { _id: req.body.id };
-        let update = { titulo: req.body.titulo, descricao: req.body.descricao, conteudo: req.body.conteudo};
+        let update = { titulo: req.body.titulo, descricao: req.body.descricao, conteudo: req.body.conteudo };
         await postagens.findOneAndUpdate(filter, update);
-        req.flash("success_msg", "Postagem atualizado");
+        req.flash('success', 'Postagem editada com sucesso!');
         res.redirect('/admin/postagens');
     } catch (err) {
-        req.flash("error_msg", "Erro ao atualizar postagem");
+        req.flash('error', 'Erro ao editar postagem.');
         res.redirect('/admin/postagem/edit/' + req.body.id);
     }
 });
 
 router.post('/postagem/apagar/:id', eAdmin, async (req, res) => {
     try {
-        const deletedUser = await postagens.findOneAndDelete({ _id: req.params.id });
-        if (!deletedUser) {
-            req.flash('error_msg', 'Postagem não encontrado!');
-        } else {
-            req.flash('success_msg', 'Postagem apagado com sucesso!');
+        const postagemToDelete = await postagens.findOne({ _id: req.params.id });
+
+        if (!postagemToDelete) {
+            req.flash('error', 'Postagem não encontrada!');
+            return res.redirect('/admin/postagens');
         }
+
+        // Obtém o nome do arquivo da imagem associada à postagem
+        const imagemFileName = postagemToDelete.imagem;
+
+        // Exclui a postagem do banco de dados
+        const deletedPostagem = await postagens.findOneAndDelete({ _id: req.params.id });
+
+        if (!deletedPostagem) {
+            req.flash('error', 'Erro ao apagar postagem!');
+        } else {
+            const imagePath = path.join(__dirname, '..', 'uploads', imagemFileName);
+
+            // Exclui o arquivo de imagem do sistema de arquivos
+            fs.unlinkSync(imagePath);
+
+            req.flash('success', 'Postagem apagada com sucesso!');
+        }
+
         res.redirect('/admin/postagens');
     } catch (error) {
-        // Erro ao apagar o usuário
         console.error(error);
-        req.flash('error', 'Erro ao apagar o postegem!');
+        req.flash('error', 'Erro ao apagar postagem');
         res.redirect('/admin/postagens');
     }
 });
+
 
 module.exports = router;

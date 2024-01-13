@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 
 const { eAdmin } = require("../helpers/eAdmin")
 
@@ -24,6 +23,7 @@ router.post('/categoria/nova', eAdmin, (req, res) => {
         slug: req.body.slug
     })
     novaCategoria.save();
+    req.flash('success', 'Categoria adicionada com sucesso!');
     res.redirect('/admin/categorias')
 })
 
@@ -38,10 +38,10 @@ router.post('/categoria/edit', eAdmin, async (req, res) => {
         let filter = { _id: req.body.id };
         let update = { nome: req.body.nome, slug: req.body.slug};
         await categorias.findOneAndUpdate(filter, update);
-        req.flash("success_msg", "Categoria atualizado");
+        req.flash('success', 'Categoria editada com sucesso!');
         res.redirect('/admin/categorias');
     } catch (err) {
-        req.flash("error_msg", "Erro ao atualizar postagem");
+        req.flash('error', 'Erro ao editar categoria.');
         res.redirect('/admin/categoria/edit/' + req.body.id);
     }
 });
@@ -50,15 +50,14 @@ router.post('/categoria/apagar/:id', eAdmin, async (req, res) => {
     try {
         const deletedUser = await categorias.findOneAndDelete({ _id: req.params.id });
         if (!deletedUser) {
-            req.flash('error_msg', 'Categoria não encontrado!');
+            req.flash('error', 'Categoria não encontrado!');
         } else {
-            req.flash('success_msg', 'Categoria apagado com sucesso!');
+            req.flash('success', 'Categoria apagado com sucesso!');
         }
         res.redirect('/admin/categorias');
     } catch (error) {
-        // Erro ao apagar o usuário
         console.error(error);
-        req.flash('error', 'Erro ao apagar o categoria!');
+        req.flash('error', 'Erro ao apagar categoria!');
         res.redirect('/admin/categorias');
     }
 });

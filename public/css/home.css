@@ -1,52 +1,82 @@
 .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
   }
+}
 
-  .nav-item a, .navbar-brand{
-    color: white;
-  }
+.nav-item a, .navbar-brand {
+  color: white;
+}
 
- .navbar-brand:hover{
-    color: rgb(222, 220, 220);
-  }
+.navbar-brand:hover {
+  color: rgb(222, 220, 220);
+}
 
-  .nav-item a:hover{
-    color: rgb(222, 220, 220);
-  }
+.nav-item a:hover {
+  color: rgb(222, 220, 220);
+}
 
-  .navbar-toggler-icon{
-    color: white;
-  }
+.navbar-toggler-icon {
+  color: white;
+}
 
-  .navbar-toggler{
-    border: 1px solid white;
-    border: none;
-    box-shadow: none;
-  }
+.navbar-toggler {
+  border: 1px solid white;
+  border: none;
+  box-shadow: none;
+}
 
-  .cabecalho-botao-icone{
-    color: white;
-    font-size: 2rem;
-    box-shadow: none;
-  }
+.cabecalho-botao-icone {
+  color: white;
+  font-size: 2rem;
+  box-shadow: none;
+}
 
-.altura{
+.altura {
   height: 100vh;
 }
 
-@media(max-width:779px){
-  .footer{
+.alert {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  /* Garante que o alerta esteja na frente de outros elementos */
+  opacity: 0;
+  /* Inicialmente invisível */
+  animation: drop-alert 0.5s ease-out forwards;
+  /* Animação de drop */
+}
+
+@keyframes drop-alert {
+  from {
+    top: -50px;
+    /* Inicialmente acima da tela */
+    opacity: 0;
+  }
+
+  to {
+    top: 0;
+    /* Finalmente na parte superior da tela */
+    opacity: 1;
+  }
+}
+
+@media(max-width:779px) {
+  .footer {
     padding-top: 200px;
   }
 }

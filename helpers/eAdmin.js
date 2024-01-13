@@ -3,8 +3,7 @@ module.exports = {
         if(req.isAuthenticated() && req.user.eAdmin == 0){
             return next();
         }
-
-        req.flash("error_msg", "Você precisa ser Admin")
+        req.flash('success', 'Você precisa ser administrador!');
         res.redirect("/")
     }
 }
